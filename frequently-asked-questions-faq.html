@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - ReevanaX Aesthetic Clinic Surat</title>
+    <meta name="description" content="Got questions about skin, hair, or aesthetic treatments at ReevanaX? Browse our frequently asked questions to learn more about our procedures, results, and clinic.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* FAQ Page Specific Styles */
+        .faq-hero {
+            background-color: var(--secondary-color);
+            padding: 70px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at top right, rgba(206,174,128,0.25) 0%, transparent 60%);
+        }
+        .faq-hero .badge {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--secondary-color);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+        .faq-hero h1 {
+            color: var(--white);
+            font-size: 46px;
+            font-weight: 600;
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 16px;
+        }
+        .faq-hero p {
+            color: rgba(255,255,255,0.8);
+            font-size: 17px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* FAQ Body */
+        .faq-section {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .faq-layout {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+        .faq-main {
+            flex: 2;
+        }
+        .faq-sidebar {
+            flex: 0.9;
+        }
+
+        /* Category Filter Tabs */
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        .faq-cat-btn {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid var(--accent-gold);
+            background: transparent;
+            color: var(--secondary-color);
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .faq-cat-btn.active,
+        .faq-cat-btn:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        /* FAQ Group */
+        .faq-group {
+            margin-bottom: 48px;
+        }
+        .faq-group-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-group-title i {
+            color: var(--accent-gold);
+        }
+
+        /* Accordion Item */
+        .faq-item {
+            border: 1px solid #f0ece4;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 0px 20px 0px;
+            transition: box-shadow 0.3s ease;
+        }
+        .faq-item:hover {
+            box-shadow: rgba(134, 77, 38, 0.12) 0px 4px 20px 0px;
+        }
+        .faq-item.open {
+            border-color: var(--accent-gold);
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            cursor: pointer;
+            background: var(--white);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark-brown);
+            font-family: 'Roboto', sans-serif;
+            gap: 16px;
+            user-select: none;
+        }
+        .faq-question:hover {
+            background: #fdf9f4;
+        }
+        .faq-question .faq-icon {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            border: 1px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        .faq-item.open .faq-question .faq-icon {
+            background: var(--secondary-color);
+            color: var(--white);
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 22px;
+            background: #fdf9f4;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding: 18px 22px;
+        }
+        .faq-answer p {
+            color: var(--text-secondary);
+            font-size: 14.5px;
+            line-height: 1.75;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Sidebar */
+        .faq-sidebar-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        .faq-sidebar-card h4 {
+            font-size: 17px;
+            color: var(--secondary-color);
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        .faq-sidebar-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .faq-cta-card {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--dark-brown) 100%);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            color: var(--white);
+        }
+        .faq-cta-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .faq-cta-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .faq-cta-card a {
+            display: block;
+            background: var(--accent-gold);
+            color: var(--secondary-color);
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s;
+        }
+        .faq-cta-card a:hover {
+            background: var(--white);
+        }
+        .faq-cta-card a.outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.5);
+            color: var(--white);
+        }
+        .faq-cta-card a.outline:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .quick-links li {
+            margin-bottom: 10px;
+        }
+        .quick-links li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-family: 'Roboto', sans-serif;
+            transition: color 0.3s;
+        }
+        .quick-links li a i {
+            color: var(--accent-gold);
+            width: 16px;
+        }
+        .quick-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Search Bar */
+        .faq-search {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: rgba(0,0,0,0.07) 0 2px 16px;
+        }
+        .faq-search input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #f0ece4;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: var(--dark-brown);
+            outline: none;
+        }
+        .faq-search input:focus {
+            border-color: var(--accent-gold);
+        }
+        .faq-search button {
+            padding: 14px 22px;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+        .faq-search button:hover {
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fab fa-whatsapp"></i> +91 88662 20272</span>
+                <span><i class="fas fa-phone-alt"></i> +91 88662 20273</span>
+                <span><i class="fas fa-phone-alt"></i> +91 88662 20274</span>
+                <span><i class="fas fa-envelope"></i> info.reevanax@gmail.com</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                <a href="#"><i class="fa-brands fa-square-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-threads"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-placeholder">[Logo Placeholder]</div>
+            </div>
+            <nav class="nav">
+                <ul>
+
+                    <li><a href="about-us.html">ABOUT</a></li>
+                    <li class="dropdown">
+                        <a href="#">TREATMENTS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a href="#">Gynec Aesthetics <i class="fas fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Vaginal Rejuvenation</a></li>
+                                    <li><a href="#">Vaginal Tightening with Advance Technology</a></li>
+                                    <li><a href="#">Vaginal PRP</a></li>
+                                    <li><a href="#">Chronic Vaginal Infection Laser Treatment</a></li>
+                                    <li><a href="#">O-Shot &amp; G-Shot for Enhacing Sexual Pleasure</a></li>
+                                    <li><a href="#">Laser Vaginoplasty</a></li>
+                                    <li><a href="#">Surgical Vaginoplasty</a></li>
+                                    <li><a href="#">Vaginal Septum Removal</a></li>
+                                    <li><a href="#">Labiaplasty</a></li>
+                                    <li><a href="#">Clitoral Hood Plasty</a></li>
+                                    <li><a href="#">Hymenoplasty</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a href="#">Mommy Makeover <i class="fas fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Breast Reduction</a></li>
+                                    <li><a href="#">Breast Augmentation</a></li>
+                                    <li><a href="#">Breast Lift</a></li>
+                                    <li><a href="#">Liposuction</a></li>
+                                    <li><a href="#">Tummy Tuck (abdominoplasty)</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Face Procedures <i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="#">Body &amp; Fitness Treatment <i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="#">Hair Care Procedures <i class="fas fa-chevron-down"></i></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="book-appointment.html">BOOK AN APPOINTMENT</a></li>
+                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- FAQ Hero -->
+    <section class="faq-hero">
+        <div class="container">
+            <span class="badge">Help Centre</span>
+            <h1>Frequently Asked Questions</h1>
+            <p>Everything you need to know about our treatments, procedures, and clinic. Can't find an answer? Just reach out to us.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-layout">
+
+                <!-- Main FAQ Content -->
+                <div class="faq-main">
+
+                    <!-- Search -->
+                    <div class="faq-search">
+                        <input type="text" id="faq-search-input" placeholder="Search your question..." oninput="filterFAQ(this.value)">
+                        <button type="button"><i class="fas fa-search"></i></button>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="faq-categories">
+                        <button class="faq-cat-btn active" onclick="showCategory('all', this)">All</button>
+                        <button class="faq-cat-btn" onclick="showCategory('general', this)">General</button>
+                        <button class="faq-cat-btn" onclick="showCategory('skin', this)">Skin Treatments</button>
+                        <button class="faq-cat-btn" onclick="showCategory('hair', this)">Hair Treatments</button>
+                        <button class="faq-cat-btn" onclick="showCategory('surgery', this)">Surgery & Procedures</button>
+                        <button class="faq-cat-btn" onclick="showCategory('appointment', this)">Appointments</button>
+                    </div>
+
+                    <!-- General FAQs -->
+                    <div class="faq-group" data-category="general">
+                        <div class="faq-group-title"><i class="fas fa-clinic-medical"></i> General Information</div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What is ReevanaX and what services do you offer?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>ReevanaX is a premium aesthetic clinic based in Surat, India. We offer a wide range of treatments including skin care, hair care, gynec aesthetics, plastic surgery, body contouring, anti-aging treatments, and more. All procedures are performed by certified specialists using US-FDA approved technology.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Where is the ReevanaX clinic located?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Our clinic is located at 2nd Floor, MBH 1, Sarthana Jakatnaka, Surat – 395006. You can reach us on +91 88662 20272 / 20273 / 20274 or email us at info.reevanax@gmail.com.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Are your doctors and specialists certified?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes. All our doctors and specialists are board-certified with years of experience in aesthetic medicine, dermatology, and cosmetic surgery. We follow the highest clinical and ethical standards to ensure your safety and satisfaction.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Is the technology used at ReevanaX safe?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely. We use only US-FDA approved devices and technologies for all our treatments. Your safety is our top priority and we ensure every procedure meets global clinical standards.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skin Treatment FAQs -->
+                    <div class="faq-group" data-category="skin">
+                        <div class="faq-group-title"><i class="fas fa-spa"></i> Skin Treatments</div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What skin treatments are available at ReevanaX?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We offer a comprehensive range of skin treatments including Laser Skin Tightening, PICO Laser, Anti-Aging Treatments, Skin Brightening, Acne Scar Removal, Stretch Mark Removal, Scar & Tattoo Removal, Mesotherapy, PRP Therapy, and more. Our skin specialists will recommend the best treatment based on your specific skin type and goals.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How many sessions are needed for laser skin treatment?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>The number of sessions varies based on the treatment type, your skin condition, and your desired outcome. Generally, skin rejuvenation treatments require 3–6 sessions spaced 4 weeks apart for optimal results. Your specialist will give you a personalized treatment plan during your consultation.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Is bridal skin treatment available for weddings?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! We offer specialized pre-wedding bridal skincare packages designed to give you a radiant, glowing complexion on your big day. Our bridal packages include facials, skin brightening, PRP, and customized treatments. We recommend starting 3–6 months before your wedding for best results.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Are skin treatments painful?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Most of our skin treatments are minimally invasive and well-tolerated. Some procedures may cause mild discomfort, tingling, or warmth during the treatment. Topical anaesthetic creams are applied before laser procedures to ensure your comfort throughout the session.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hair Treatment FAQs -->
+                    <div class="faq-group" data-category="hair">
+                        <div class="faq-group-title"><i class="fas fa-magic"></i> Hair Treatments</div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What hair loss treatments does ReevanaX offer?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We offer advanced hair loss solutions including Hair PRP (Platelet-Rich Plasma), Hair Mesotherapy, Omega Light Therapy, Stepwise Baldness Treatment, Hair Transplant consultations, and customized programs for both men and women. Treatments are tailored to your hair loss stage and pattern.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Is hair PRP treatment effective?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, Hair PRP is a clinically proven treatment that uses growth factors from your own blood to stimulate hair follicles and promote new hair growth. Most patients see significant improvement in hair density and thickness after 3–6 sessions. Results vary based on individual hair loss patterns.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Do you offer pre-wedding hair treatments for grooms?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely. We have dedicated pre-wedding grooming packages for grooms that include hair strengthening, scalp treatments, beard grooming, and skin treatments. We recommend starting at least 3 months before your wedding for the best results. Read our blog on <a href="skin-and-hair-treatments-for-groom.html" style="color: var(--primary-color);">groom's pre-wedding treatments</a> to learn more.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surgery FAQs -->
+                    <div class="faq-group" data-category="surgery">
+                        <div class="faq-group-title"><i class="fas fa-user-md"></i> Surgery & Procedures</div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What plastic surgery procedures are available?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We offer a range of plastic surgery procedures including Rhinoplasty, Blepharoplasty (eyelid surgery), Lip Surgery, Facelift (Rhytidectomy), Chin Augmentation, Breast Augmentation, Breast Reduction, Breast Lift, Tummy Tuck, Liposuction, Butt Lift, and more. All surgeries are performed by experienced certified surgeons.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How long is the recovery time after surgery?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Recovery time varies depending on the type of procedure. Minor procedures may have a recovery of a few days, while more complex surgeries can require 2–6 weeks. Your surgeon will provide a detailed post-care plan and follow-up schedule to ensure a smooth recovery.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Are surgical results permanent?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Many surgical results are long-lasting or permanent, particularly structural procedures like rhinoplasty, liposuction, and breast augmentation. However, factors like aging, weight changes, and lifestyle habits can affect results over time. Non-surgical treatments may require maintenance sessions.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What is gynec aesthetics and who is it for?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Gynec aesthetics refers to cosmetic procedures of the female intimate area performed for medical, functional, or aesthetic reasons. These include Labiaplasty, Vaginal Tightening, Vaginal Rejuvenation, Hymenoplasty, and more. These procedures are for women who desire improvement in comfort, appearance, or function. Strict privacy and confidentiality are maintained at all times.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointment FAQs -->
+                    <div class="faq-group" data-category="appointment">
+                        <div class="faq-group-title"><i class="fas fa-calendar-check"></i> Appointments & Consultations</div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How do I book an appointment at ReevanaX?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>You can book an appointment easily by visiting our <a href="book-appointment.html" style="color: var(--primary-color);">Book An Appointment</a> page, calling us on +91 88662 20272, or messaging us on WhatsApp. We will confirm your slot and send you all necessary details.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Is there a consultation fee?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Please contact our clinic directly to enquire about consultation fees for specific treatments. You can reach us at +91 88662 20272 or via WhatsApp. We strive to make our services accessible and will be happy to provide full details during the call.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What should I do to prepare for my first appointment?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>For your first appointment, please come with clean skin (no heavy makeup for skin consultations), a list of any medications you are taking, and any previous medical reports if relevant. If you have specific concerns or goals, feel free to note them down so our specialists can address them thoroughly.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Can I cancel or reschedule my appointment?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, you can cancel or reschedule your appointment. Please inform us at least 24 hours in advance so that we can accommodate other patients and offer you an alternative slot at your convenience. Contact us on WhatsApp or phone to reschedule.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end faq-main -->
+
+                <!-- Sidebar -->
+                <div class="faq-sidebar">
+
+                    <!-- CTA Card -->
+                    <div class="faq-cta-card" style="margin-bottom: 24px;">
+                        <h4>Still Have Questions?</h4>
+                        <p>Our experts are happy to answer any questions you have about treatments, recovery, or results.</p>
+                        <a href="book-appointment.html"><i class="fas fa-calendar-check" style="margin-right:8px;"></i>Book a Consultation</a>
+                        <a href="contact.html" class="outline"><i class="fas fa-envelope" style="margin-right:8px;"></i>Send Us a Message</a>
+                    </div>
+
+                    <!-- Quick Contact -->
+                    <div class="faq-sidebar-card">
+                        <h4><i class="fas fa-phone-alt" style="color:var(--accent-gold);margin-right:8px;"></i>Contact Us</h4>
+                        <p>Reach our team directly for personalized guidance on any treatment.</p>
+                        <ul class="quick-links">
+                            <li><a href="tel:+918866220272"><i class="fab fa-whatsapp"></i> +91 88662 20272</a></li>
+                            <li><a href="tel:+918866220273"><i class="fas fa-phone-alt"></i> +91 88662 20273</a></li>
+                            <li><a href="tel:+918866220274"><i class="fas fa-phone-alt"></i> +91 88662 20274</a></li>
+                            <li><a href="mailto:info.reevanax@gmail.com"><i class="fas fa-envelope"></i> info.reevanax@gmail.com</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="faq-sidebar-card">
+                        <h4><i class="fas fa-link" style="color:var(--accent-gold);margin-right:8px;"></i>Quick Links</h4>
+                        <ul class="quick-links">
+                            <li><a href="about-us.html"><i class="fas fa-chevron-right"></i> About ReevanaX</a></li>
+                            <li><a href="book-appointment.html"><i class="fas fa-chevron-right"></i> Book Appointment</a></li>
+                            <li><a href="blogs.html"><i class="fas fa-chevron-right"></i> Read Our Blogs</a></li>
+                            <li><a href="best-skincare-treatment-in-surat.html"><i class="fas fa-chevron-right"></i> Bride Skincare Blog</a></li>
+                            <li><a href="skin-and-hair-treatments-for-groom.html"><i class="fas fa-chevron-right"></i> Groom's Treatment Blog</a></li>
+                            <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Opening Hours -->
+                    <div class="faq-sidebar-card">
+                        <h4><i class="fas fa-clock" style="color:var(--accent-gold);margin-right:8px;"></i>Clinic Hours</h4>
+                        <ul class="quick-links">
+                            <li><a href="#"><i class="fas fa-dot-circle"></i> Mon – Sat: 10:00 AM – 8:00 PM</a></li>
+                            <li><a href="#"><i class="fas fa-dot-circle"></i> Sunday: By Appointment Only</a></li>
+                        </ul>
+                    </div>
+
+                </div><!-- end faq-sidebar -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>ReevanaX</h4>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-bottom: 16px;">Premium aesthetic clinic in Surat offering advanced skin, hair, and body treatments using US-FDA approved technology.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                    <a href="#"><i class="fa-brands fa-square-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-threads"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="frequently-asked-questions-faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Treatments</h4>
+                <ul>
+                    <li><a href="#">Skin Treatments</a></li>
+                    <li><a href="#">Hair Treatments</a></li>
+                    <li><a href="#">Gynec Aesthetics</a></li>
+                    <li><a href="#">Plastic Surgery</a></li>
+                    <li><a href="#">Body Contouring</a></li>
+                    <li><a href="#">Anti-Aging</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Popular FAQs</h4>
+                <ul>
+                    <li><a href="#">Bridal Skin Treatments</a></li>
+                    <li><a href="#">Groom Packages</a></li>
+                    <li><a href="#">Hair PRP</a></li>
+                    <li><a href="#">Laser Skin Tightening</a></li>
+                    <li><a href="#">Appointment Booking</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fab fa-whatsapp"></i> +91 88662 20272</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 88662 20273</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 88662 20274</li>
+                    <li><i class="fas fa-envelope"></i> info.reevanax@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span>2nd Floor, MBH 1, Sarthana Jakatnaka,<br>Surat - 395006</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2026 ReevanaX. All Rights Reserved | Designed &amp; Developed by <span style="color: var(--accent-gold);">Blue Global Technology</span></p>
+        </div>
+
+        <a href="https://wa.me/918866220272" class="floating-whatsapp"><i class="fab fa-whatsapp"></i></a>
+
+        <div class="floating-right-menu">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <a href="frequently-asked-questions-faq.html" class="floating-btn faq-btn active">FAQ</a>
+                <a href="#" class="floating-btn link-btn"><i class="fas fa-link"></i></a>
+            </div>
+            <a href="book-appointment.html" class="floating-btn book-btn">Book An Appointment</a>
+        </div>
+
+        <a href="#" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+
+    <script>
+        // Toggle FAQ accordion
+        function toggleFAQ(questionEl) {
+            const item = questionEl.parentElement;
+            const wasOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+            // Open clicked if it was closed
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        // Category filter
+        function showCategory(cat, btn) {
+            document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.faq-group').forEach(group => {
+                if (cat === 'all' || group.dataset.category === cat) {
+                    group.style.display = '';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        }
+
+        // Search filter
+        function filterFAQ(query) {
+            const q = query.toLowerCase().trim();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = (!q || text.includes(q)) ? '' : 'none';
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
